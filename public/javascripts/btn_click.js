@@ -13,12 +13,4 @@ document.getElementById('like').onclick=function(){
     sendcity();
  };
 
-    document.querySelector('input').addEventListener('keydown', function(e) {
-        if (e.keyCode === 13) {
-            // можете делать все что угодно со значением текстового поля
-            sendcity();
-            console.log(this.value);
-        }
-    });
-
 };

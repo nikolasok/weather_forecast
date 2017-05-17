@@ -33,6 +33,9 @@ width: 40%;
   font-size:2em;
 }
 
+.current{
+  color:white;
+}
 body {
   background-image: url(../images/background.jpg); /* Путь к фоновому изображению */
   background-color: #c7b39b; /* Цвет фона */
