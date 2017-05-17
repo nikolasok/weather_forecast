@@ -1,0 +1,17 @@
+extends layout
+
+block content2
+    div(class="forecast")
+      h1= city
+      p #{description}
+      p Температура: #{temp}°C
+      p Влажность воздуха: #{humidity}%
+      p Атмосферное давление: #{pressure} мм рт. ст
+      p Скорость ветра: #{windspeed} м/с
+
+block content
+    h1(class="titleh") Прогноз погоды
+
+    form(class="form-inline")
+        input(type='text' id='textbox' class="form-control" placeholder="Введите название города")
+        button(type='button' id='like' class='btn btn-primary btn-lg' ) Поиск
