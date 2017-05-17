@@ -41,7 +41,8 @@ router.get('/:id',function (req,res) {
                 var humidity=importedJSON["main"]["humidity"]; //влажность
                 var city=importedJSON["name"];
 
-                res.render('daily',{city:city,main:main,description:description,pressure:pressure,windspeed:windspeed,temp:temp,humidity:humidity});
+               // res.render('daily',{city:city,main:main,description:description,pressure:pressure,windspeed:windspeed,temp:temp,humidity:humidity});
+                res.send(importedJSON);
             }
             else {
                 console.log("error");
