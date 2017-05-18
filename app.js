@@ -10,6 +10,9 @@ var current = require('./routes/current');
 
 var app = express();
 
+var PouchDB = require('pouchdb-node');
+var db = new PouchDB('mydb');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
