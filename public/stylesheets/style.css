@@ -36,6 +36,16 @@ width: 40%;
 .current{
   color:white;
 }
+
+.weekforecast{
+  margin: 1em 0 1em 0;
+  color:white;
+}
+.weatherblock{
+  display:inline-block;
+  margin:1em 1em 0 0;
+}
+
 body {
   background-image: url(../images/background.jpg); /* Путь к фоновому изображению */
   background-color: #c7b39b; /* Цвет фона */

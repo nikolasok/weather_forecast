@@ -191,7 +191,7 @@ var getArguments = _interopDefault(__webpack_require__(3));
 var events = __webpack_require__(4);
 var inherits = _interopDefault(__webpack_require__(5));
 var nextTick = _interopDefault(__webpack_require__(0));
-var debug = _interopDefault(__webpack_require__(8));
+var debug = _interopDefault(__webpack_require__(7));
 var Md5 = _interopDefault(__webpack_require__(11));
 var vuvuzela = _interopDefault(__webpack_require__(12));
 
@@ -12500,159 +12500,6 @@ function race(iterable) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Helpers.
- */
-
-var s = 1000;
-var m = s * 60;
-var h = m * 60;
-var d = h * 24;
-var y = d * 365.25;
-
-/**
- * Parse or format the given `val`.
- *
- * Options:
- *
- *  - `long` verbose formatting [false]
- *
- * @param {String|Number} val
- * @param {Object} options
- * @throws {Error} throw an error if val is not a non-empty string or a number
- * @return {String|Number}
- * @api public
- */
-
-module.exports = function (val, options) {
-  options = options || {};
-  var type = typeof val === 'undefined' ? 'undefined' : _typeof(val);
-  if (type === 'string' && val.length > 0) {
-    return parse(val);
-  } else if (type === 'number' && isNaN(val) === false) {
-    return options.long ? fmtLong(val) : fmtShort(val);
-  }
-  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
-};
-
-/**
- * Parse the given `str` and return milliseconds.
- *
- * @param {String} str
- * @return {Number}
- * @api private
- */
-
-function parse(str) {
-  str = String(str);
-  if (str.length > 10000) {
-    return;
-  }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-  if (!match) {
-    return;
-  }
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return undefined;
-  }
-}
-
-/**
- * Short format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtShort(ms) {
-  if (ms >= d) {
-    return Math.round(ms / d) + 'd';
-  }
-  if (ms >= h) {
-    return Math.round(ms / h) + 'h';
-  }
-  if (ms >= m) {
-    return Math.round(ms / m) + 'm';
-  }
-  if (ms >= s) {
-    return Math.round(ms / s) + 's';
-  }
-  return ms + 'ms';
-}
-
-/**
- * Long format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtLong(ms) {
-  return plural(ms, d, 'day') || plural(ms, h, 'hour') || plural(ms, m, 'minute') || plural(ms, s, 'second') || ms + ' ms';
-}
-
-/**
- * Pluralization helper.
- */
-
-function plural(ms, n, name) {
-  if (ms < n) {
-    return;
-  }
-  if (ms < n * 1.5) {
-    return Math.floor(ms / n) + ' ' + name;
-  }
-  return Math.ceil(ms / n) + ' ' + name + 's';
-}
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -12663,7 +12510,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(9);
+exports = module.exports = __webpack_require__(8);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -12824,7 +12671,7 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12842,7 +12689,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(7);
+exports.humanize = __webpack_require__(9);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -13031,6 +12878,159 @@ function enabled(name) {
 function coerce(val) {
   if (val instanceof Error) return val.stack || val.message;
   return val;
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} options
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function (val, options) {
+  options = options || {};
+  var type = typeof val === 'undefined' ? 'undefined' : _typeof(val);
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str);
+  if (str.length > 10000) {
+    return;
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+  if (!match) {
+    return;
+  }
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s;
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd';
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h';
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm';
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's';
+  }
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') || plural(ms, h, 'hour') || plural(ms, m, 'minute') || plural(ms, s, 'second') || ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return;
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name;
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
 /***/ }),
@@ -14178,43 +14178,25 @@ exports.parse = function (str) {
 "use strict";
 
 
+var babelcheck = void 0;
 var PouchDB = __webpack_require__(2);
 var db = new PouchDB('mydb');
 function addTodo(text) {
-    var todo = {
+    var info = {
         _id: new Date().toISOString(),
         title: text,
         completed: false
     };
-    db.put(todo, function callback(err, result) {
+    db.put(info, function callback(err, result) {
         if (!err) {
-            console.log('Successfully posted a todo!');
+            console.log('Successfully posted an info!');
         }
     });
 }
 
 function ucFirst(str) {
     if (!str) return str;
-
     return str[0].toUpperCase() + str.slice(1);
-}
-
-function get() {
-    db.get("0").then(function (doc) {
-        console.log(doc); // handle doc
-    }).catch(function (err) {
-        console.log(err);
-    });
-}
-
-function getdata() {
-    db.get('001', function (err, doc) {
-        if (err) {
-            return console.log(err);
-        } else {
-            console.log(doc);
-        }
-    });
 }
 
 function showTodos(cityname) {
@@ -14223,14 +14205,12 @@ function showTodos(cityname) {
         console.log(doc);
         try {
             console.log(cityname);
-
             for (var i = 0; i < doc.rows.length; i++) {
                 if (ucFirst(cityname) === doc.rows[i]["doc"]["title"]["name"]) {
                     b = doc.rows[i]["doc"]["title"];
                     break;
                 }
             }
-            console.log(b);
             render_current(b);
         } catch (error) {
             console.log(error);
@@ -14250,30 +14230,65 @@ function render_current(importedJSON) {
     var newdiv = "<div class='current'>" + "<div class='type'>Текущая</div>" + "<div class='city'>" + city + "</div>" + "<div class='description'><img src='" + weathericon + "'/>" + description + "</div>" + "<div class='temp'>Температура: " + temp + " °C</div>" + "<div class='humidity'>Влажность воздуха: " + humidity + " %</div>" + "<div class='pressure'>Атмосферное давление: " + pressure + " мм рт. ст</div>" + "<div class='windspeed'>Скорость ветра: " + windspeed + " м/с</div>" + "</div>";
     $(".current").replaceWith(newdiv);
 }
+
+function render_week(importedJSON) {
+    var city = importedJSON["city"]["name"];
+    var newdivcontainer = [];
+
+    for (var i = importedJSON["list"].length - 3; i >= 0; i -= 8) {
+        var dt_txt = importedJSON["list"][i]["dt_txt"];
+        var description = importedJSON["list"][i]["weather"][0]["description"];
+        var weathericon = "http://openweathermap.org/img/w/" + importedJSON["list"][i]["weather"][0]["icon"] + ".png";
+        var temp = (importedJSON["list"][i]["main"]["temp"] - 273.15).toFixed(2);
+        var humidity = importedJSON["list"][i]["main"]["humidity"]; //влажность
+        var pressure = (importedJSON["list"][i]["main"]["pressure"] * 0.75006375541921).toFixed(0);
+        var windspeed = importedJSON["list"][i]["wind"]["speed"];
+
+        newdivcontainer[newdivcontainer.length] = "<div class='weatherblock'>" + "<div class='city'>" + city + "</div>" + "<div class='type'>" + dt_txt + "</div>" + "<div class='description'><img src='" + weathericon + "'/>" + description + "</div>" + "<div class='temp'>Температура: " + temp + " °C</div>" + "<div class='humidity'>Влажность воздуха: " + humidity + " %</div>" + "<div class='pressure'>Атмосферное давление: " + pressure + " мм рт. ст</div>" + "<div class='windspeed'>Скорость ветра: " + windspeed + " м/с</div>" + "</div>";
+        //console.log(dt_txt);
+    }
+
+    var newdiv = "<div class='weekforecast'>";
+
+    for (var _i = newdivcontainer.length - 1; _i >= 0; _i--) {
+        newdiv += newdivcontainer[_i];
+    }
+
+    newdiv += "</div>";
+    $(".weekweather").replaceWith(newdiv);
+}
+
 $(document).ready(function () {
 
     $("#like").on("click", function () {
         if ($('#textbox').val().length > 0) {
             var city = $('input#textbox').val();
-
             /*
-            db.get('mydb').then(function (doc) {
-               console.log(doc); // handle doc
-            }).catch(function (err) {
-                console.log(err);
-            });*/
+             db.get('mydb').then(function (doc) {
+             console.log(doc); // handle doc
+             }).catch(function (err) {
+             console.log(err);
+             });*/
             $.ajax({
                 type: "GET",
-                url: "current/" + city + "",
+                url: "current/" + city,
                 contentType: "application/json",
                 timeout: 3000,
                 success: function success(data) {
-                    console.log(data);
-                    var importedJSON = $.parseJSON(data);
-                    addTodo(importedJSON);
-                    //getdata()
+                    console.log("succes");
+                    //console.log(data);
+                    var currentweather = JSON.parse(data[0]);
+                    addTodo(currentweather);
+                    render_current(currentweather);
 
-                    render_current(importedJSON);
+                    if (data.length > 1) {
+                        //console.log(data[1]);
+                        var weekweather = $.parseJSON(data[1]);
+                        //console.log(weekweather["list"].length);
+                        render_week(weekweather);
+                    }
+                    // var massvremennui=[2];
+                    // massvremennui[0]=currentweather;
                 },
                 error: function error() {
                     try {
